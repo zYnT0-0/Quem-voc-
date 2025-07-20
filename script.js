@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookCover = document.getElementById('book-cover');
     const firstChapter = document.getElementById('chapter1'); // ID do primeiro capítulo
 
+    // NOVO: Elementos do Modal de Comentários
+    const openCommentsBtn = document.getElementById('open-comments-btn');
+    const commentsModalOverlay = document.getElementById('comments-modal-overlay');
+    const closeCommentsBtn = document.getElementById('close-comments-btn');
+    const commentsIframe = document.getElementById('comments-iframe');
+
     // --- 1. Tema Claro/Escuro ---
     // Tenta carregar o tema salvo ou usa a preferência do sistema
     const savedTheme = localStorage.getItem('theme');
@@ -26,74 +32,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme); // Salva a preferência do usuário
-        updateThemeIcons(); // Atualiza os ícones após a mudança
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcons();
     });
 
     function updateThemeIcons() {
         if (body.getAttribute('data-theme') === 'dark') {
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
+            sunIcon.classList.remove('active');
+            moonIcon.classList.add('active');
         } else {
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
+            sunIcon.classList.add('active');
+            moonIcon.classList.remove('active');
         }
     }
 
-    // --- 2. Controle de Fonte (Tamanho e Tipo) ---
-    // Recupera o tamanho e tipo de fonte salvos ou define padrões
-    let currentFontSize = parseFloat(localStorage.getItem('fontSize') || '1.1'); // Padrão 1.1rem
-    let currentFontFamily = localStorage.getItem('fontFamily') || 'Merriweather'; // Padrão 'Merriweather'
-
-    function applyFontSettings() {
-        // Aplica o tamanho da fonte
-        body.style.setProperty('--base-font-size', `${currentFontSize}rem`);
-        localStorage.setItem('fontSize', currentFontSize);
-
-        // Aplica o tipo de fonte
-        if (currentFontFamily === 'Merriweather') {
-            body.style.fontFamily = 'var(--font-primary)';
-        } else if (currentFontFamily === 'Open Sans') {
-            body.style.fontFamily = 'var(--font-secondary)';
-        } else if (currentFontFamily === 'monospace') {
-            body.style.fontFamily = 'var(--font-monospace)';
-        }
-        localStorage.setItem('fontFamily', currentFontFamily);
-        fontFamilySelect.value = currentFontFamily; // Sincroniza o select
-    }
-
-    // Aplica as configurações salvas ao carregar
-    applyFontSettings();
+    // --- 2. Ajuste de Tamanho da Fonte ---
+    fontSizeDecrease.addEventListener('click', () => {
+        const currentSize = parseFloat(getComputedStyle(body).fontSize);
+        body.style.fontSize = `${Math.max(0.8, currentSize / 1.1)}px`; // Diminui, com mínimo
+        localStorage.setItem('fontSize', body.style.fontSize);
+    });
 
     fontSizeIncrease.addEventListener('click', () => {
-        currentFontSize = Math.min(currentFontSize + 0.1, 1.5); // Limite máximo
-        applyFontSettings();
+        const currentSize = parseFloat(getComputedStyle(body).fontSize);
+        body.style.fontSize = `${currentSize * 1.1}px`; // Aumenta
+        localStorage.setItem('fontSize', body.style.fontSize);
     });
 
-    fontSizeDecrease.addEventListener('click', () => {
-        currentFontSize = Math.max(currentFontSize - 0.1, 0.9); // Limite mínimo
-        applyFontSettings();
-    });
+    // Restaura tamanho da fonte salvo
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+        body.style.fontSize = savedFontSize;
+    }
 
+    // --- 3. Seleção de Família da Fonte ---
     fontFamilySelect.addEventListener('change', (event) => {
-        currentFontFamily = event.target.value;
-        applyFontSettings();
+        const selectedFont = event.target.value;
+        body.style.fontFamily = `var(--font-${selectedFont.replace(/\s/g, '')})`; // Adapta para variáveis CSS
+        localStorage.setItem('fontFamily', selectedFont);
     });
 
-    // --- 3. Barra de Progresso de Leitura ---
-    function updateProgressBar() {
-        // Calcula a altura total da página menos a altura da viewport
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = document.documentElement.scrollTop;
-        
-        // Evita divisão por zero para páginas muito curtas
-        if (scrollHeight === 0) {
-            progressBar.style.width = '100%';
-            return;
-        }
+    // Restaura família da fonte salva
+    const savedFontFamily = localStorage.getItem('fontFamily');
+    if (savedFontFamily) {
+        fontFamilySelect.value = savedFontFamily;
+        body.style.fontFamily = `var(--font-${savedFontFamily.replace(/\s/g, '')})`;
+    }
 
+    // --- 4. Barra de Progresso de Leitura ---
+    function updateProgressBar() {
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = window.scrollY;
         const progress = (scrolled / scrollHeight) * 100;
         progressBar.style.width = `${progress}%`;
     }
@@ -101,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateProgressBar);
     updateProgressBar(); // Atualiza ao carregar a página
 
-    // --- 4. Botão "Começar a Ler" e Salvar Posição de Leitura ---
+    // --- 5. Botão "Começar a Ler" e Salvar Posição de Leitura ---
     startReadingButton.addEventListener('click', () => {
         if (firstChapter) {
             firstChapter.scrollIntoView({
@@ -130,6 +121,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('beforeunload', saveReadingPosition);
     restoreReadingPosition(); // Restaura ao carregar
+
+    // --- 6. Funcionalidade do Modal de Comentários ---
+    openCommentsBtn.addEventListener('click', () => {
+        commentsModalOverlay.classList.add('active');
+        // Opcional: Recarregar o iframe para garantir o conteúdo mais recente
+        // commentsIframe.src = commentsIframe.src; 
+    });
+
+    closeCommentsBtn.addEventListener('click', () => {
+        commentsModalOverlay.classList.remove('active');
+    });
+
+    // Fechar o modal clicando fora do conteúdo
+    commentsModalOverlay.addEventListener('click', (event) => {
+        if (event.target === commentsModalOverlay) {
+            commentsModalOverlay.classList.remove('active');
+        }
+    });
 
     // --- Acessibilidade ---
     // `alt` text para a imagem da capa é definido no HTML
