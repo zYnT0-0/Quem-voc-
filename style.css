@@ -1,7 +1,6 @@
 /* Importar fontes do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap');
 
-/* Variáveis CSS para temas */
 :root {
     --primary-text-color: #333;
     --secondary-text-color: #555;
@@ -21,7 +20,6 @@
     --font-monospace: 'Roboto Mono', monospace;
 }
 
-/* Tema Escuro */
 body[data-theme="dark"] {
     --primary-text-color: #e0e0e0;
     --secondary-text-color: #b0b0b0;
@@ -120,22 +118,21 @@ body[data-theme="dark"] #moon-icon { display: block; }
 body[data-theme="light"] #moon-icon { display: none; }
 body[data-theme="dark"] #sun-icon { display: none; }
 
-
 .book-container {
     width: 95vw;
     max-width: 1000px;
     background-color: var(--book-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin: 30px auto;
+    margin: 40px auto 20px;
     overflow: hidden;
     padding-top: 0;
 }
 
-/* Ajuste principal da imagem responsiva */
 .cover {
     position: relative;
     width: 100%;
+    aspect-ratio: 16 / 9;
     background-image: url('desenho.jpg');
     background-size: contain;
     background-repeat: no-repeat;
@@ -144,18 +141,15 @@ body[data-theme="dark"] #sun-icon { display: none; }
     border-radius: 15px 15px 0 0;
     text-align: center;
     overflow: hidden;
-    aspect-ratio: 16 / 9; /* substitui padding-top */
-    margin-top: 90px;
 }
 
-/* Texto centralizado */
 .book-title {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Merriweather', serif;
-    font-size: 3.8em;
+    font-size: 3em;
     z-index: 1;
     color: #fff;
     padding: 0 20px;
@@ -164,15 +158,6 @@ body[data-theme="dark"] #sun-icon { display: none; }
 
 body[data-theme="dark"] .cover::before {
     background: rgba(0, 0, 0, 0.6);
-}
-
-.book-title {
-    font-family: 'Merriweather', serif;
-    font-size: 3em;
-    z-index: 1;
-    text-align: center;
-    padding: 0 20px;
-    margin-bottom: 30px;
 }
 
 .start-reading-button {
@@ -190,7 +175,6 @@ body[data-theme="dark"] .cover::before {
     justify-content: center;
     margin: auto;
     margin-top: 20px;
-    
 }
 
 .start-reading-button:hover {
@@ -259,7 +243,6 @@ em {
     font-style: italic;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .book-title {
         font-size: 2.5em;
