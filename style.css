@@ -273,7 +273,7 @@ em {
     position: relative;
     transform: translateY(20px); /* Começa um pouco abaixo */
     transition: transform 0.3s ease;
-    overflow: hidden; /* Esconde qualquer barra de rolagem do próprio modal-content */
+    overflow: hidden; /* ESSA LINHA É CRUCIAL PARA ESCONDER A BARRA DO IFRAME */
 }
 
 .comments-modal-overlay.active .comments-modal-content {
@@ -307,8 +307,7 @@ em {
     height: 100%;
     border: none; /* Remove a borda padrão do iframe */
     border-radius: 0; /* REMOVIDO: Borda arredondada do iframe */
-    /* Para esconder a barra de rolagem do iframe, o overflow do pai é mais eficaz */
-    overflow: hidden; /* Garante que o iframe não mostre sua própria barra de rolagem */
+    /* overflow: hidden; <-- REMOVIDO DAQUI, POIS O PAI JÁ CUIDA */
 }
 
 /* Responsividade para o modal */
