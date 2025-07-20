@@ -54,8 +54,8 @@ header {
     padding: 10px 20px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
-    flex-wrap: wrap; /* Permite que os itens quebrem a linha */
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Espaça os itens */
     align-items: center;
     position: sticky;
     top: 0;
@@ -84,9 +84,11 @@ header {
 
 .controls {
     display: flex;
-    gap: 10px;
-    align-items: center;
+    gap: 10px; /* Espaçamento entre os botões */
+    align-items: center; /* Alinha verticalmente no centro */
     flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas pequenas */
+    justify-content: flex-end; /* Alinha os controles à direita */
+    width: 100%; /* Ocupa a largura total para alinhamento */
 }
 
 .controls button, .controls select {
@@ -98,6 +100,8 @@ header {
     cursor: pointer;
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    min-width: 80px; /* Garante um tamanho mínimo para botões */
+    text-align: center;
 }
 
 .controls button:hover, .controls select:hover {
@@ -224,13 +228,16 @@ em {
         padding: 20px;
     }
 
+    .controls {
+        justify-content: center; /* Centraliza os botões em telas menores */
+    }
     .controls button, .controls select {
         padding: 6px 10px;
         font-size: 0.8em;
     }
 }
 
-/* NOVO: Estilos para o Modal de Comentários */
+/* Estilos para o Modal de Comentários */
 .comments-modal-overlay {
     position: fixed;
     top: 0;
@@ -253,12 +260,12 @@ em {
 }
 
 .comments-modal-content {
-    background: var(--book-bg-color); /* Fundo do modal, pode ser ajustado */
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    background: transparent; /* Fundo transparente para o conteúdo do modal */
+    padding: 0; /* Removido padding para o iframe ocupar tudo */
+    border-radius: 0; /* REMOVIDO: Borda arredondada */
+    box-shadow: none; /* REMOVIDO: Sombra */
     width: 90%; /* Largura do modal */
-    max-width: 800px; /* Largura máxima */
+    max-width: 700px; /* Largura máxima (para corresponder ao container de comentários) */
     height: 90%; /* Altura do modal */
     max-height: 90vh; /* Altura máxima em relação à viewport */
     display: flex;
@@ -266,6 +273,7 @@ em {
     position: relative;
     transform: translateY(20px); /* Começa um pouco abaixo */
     transition: transform 0.3s ease;
+    overflow: hidden; /* Esconde qualquer barra de rolagem do próprio modal-content */
 }
 
 .comments-modal-overlay.active .comments-modal-content {
@@ -298,7 +306,9 @@ em {
     width: 100%;
     height: 100%;
     border: none; /* Remove a borda padrão do iframe */
-    border-radius: 5px; /* Arredonda as bordas do iframe */
+    border-radius: 0; /* REMOVIDO: Borda arredondada do iframe */
+    /* Para esconder a barra de rolagem do iframe, o overflow do pai é mais eficaz */
+    overflow: hidden; /* Garante que o iframe não mostre sua própria barra de rolagem */
 }
 
 /* Responsividade para o modal */
