@@ -126,9 +126,8 @@ body[data-theme="dark"] #sun-icon { display: none; }
     background-color: var(--book-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin: 0 auto;
+    padding-top: 30px; /* ou 40px se quiser mais espaço */
     overflow: hidden;
-    padding-top: 20px; /* antes: 80px */
 }
 
 
