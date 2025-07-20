@@ -126,9 +126,9 @@ body[data-theme="dark"] #sun-icon { display: none; }
     background-color: var(--book-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin: 30px auto;
+    margin: 30px auto;   /* espaço entre o header e a imagem */
     overflow: hidden;
-    padding-top: 30px; /* cria o respiro acima da imagem */
+    padding-top: 0;       /* importante */
     position: relative;
     z-index: 1;
 }
@@ -148,8 +148,10 @@ body[data-theme="dark"] #sun-icon { display: none; }
     color: #fff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     border-radius: 8px 8px 0 0;
+    overflow: hidden;
     margin: 0;
 }
+
 
 
 .cover::before {
