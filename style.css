@@ -120,44 +120,46 @@ body[data-theme="dark"] #moon-icon { display: block; }
 body[data-theme="light"] #moon-icon { display: none; }
 body[data-theme="dark"] #sun-icon { display: none; }
 
+
 .book-container {
     width: 95vw;
     max-width: 1000px;
     background-color: var(--book-bg-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin: 20px auto;
+    margin: 30px auto;
     overflow: hidden;
-    padding-top: 80px;
+    padding-top: 0;
 }
 
+/* Ajuste principal da imagem responsiva */
 .cover {
     position: relative;
     width: 100%;
-    height: 100vh;
     background-image: url('desenho.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: #000;
     border-radius: 15px 15px 0 0;
     text-align: center;
+    overflow: hidden;
+    aspect-ratio: 16 / 9; /* substitui padding-top */
+    margin-top: 90px;
 }
 
-.cover::before {
-    content: '';
+/* Texto centralizado */
+.book-title {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 8px 8px 0 0;
-    transition: background 0.3s ease;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Merriweather', serif;
+    font-size: 3.8em;
+    z-index: 1;
+    color: #fff;
+    padding: 0 20px;
+    text-align: center;
 }
 
 body[data-theme="dark"] .cover::before {
