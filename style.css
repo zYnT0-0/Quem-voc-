@@ -155,7 +155,12 @@ body[data-theme="dark"] #sun-icon { display: none; }
     color: #fff;
     padding: 0 20px;
     text-align: center;
+    white-space: nowrap;         /* ⚠️ impede quebra de linha */
+    overflow: hidden;            /* evita ultrapassar a borda */
+    text-overflow: ellipsis;     /* opcional: coloca \"...\" se faltar espaço */
+    max-width: 90vw;             /* garante que cabe em telas estreitas */
 }
+
 
 
 body[data-theme="dark"] .cover::before {
