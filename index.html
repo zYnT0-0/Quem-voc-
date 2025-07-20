@@ -6,7 +6,8 @@
     <title>Quem é você?</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-theme="light"> <header>
+<body data-theme="light">
+    <header>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
@@ -17,150 +18,26 @@
             </button>
             <button id="font-size-decrease" aria-label="Diminuir tamanho da fonte">A-</button>
             <button id="font-size-increase" aria-label="Aumentar tamanho da fonte">A+</button>
-            <select id="font-family-select" aria-label="Selecionar tipo de fonte">
-                <option value="Merriweather">Serifada (Padrão)</option>
-                <option value="Open Sans">Sem Serifas</option>
-                <option value="monospace">Monoespaçada</option>
+            <select id="font-family-select" aria-label="Selecionar família da fonte">
+                <option value="Merriweather">Merriweather (Padrão)</option>
+                <option value="Open Sans">Open Sans (Leitura)</option>
+                <option value="Roboto Mono">Roboto Mono (Código)</option>
             </select>
+            <!-- NOVO BOTÃO PARA COMENTÁRIOS -->
+            <button id="open-comments-btn" aria-label="Abrir comentários">Comentários</button>
         </div>
     </header>
 
-    <div class="book-container">
-        <div class="cover" id="book-cover">
+    <main class="book-container">
+        <div id="book-cover" class="book-cover">
+            <img src="desenho.jpg" alt="Capa do Livro - Quem é você?" class="cover-image">
             <h1 class="book-title">Quem é você?</h1>
-
+            <p class="book-subtitle">Uma jornada para o autoconhecimento.</p>
+            <button id="start-reading" class="start-reading-button">Começar a Ler</button>
         </div>
-        
-                    <button id="start-reading" class="start-reading-button">Começar a Ler</button>
-        
+
         <div class="chapter-content">
-            <h1 id="chapter1" class="chapter-title">Capítulo 1 — Introdução: Quem é você?</h1>
-            <p>Você não está perdido. Desde o início das nossas vidas, escondemos quem somos — e, muitas vezes, escondemos isso de nós mesmos. Por quê? Bom, penso que pode ser por várias razões. Uma delas talvez seja o medo... ou a vergonha de ser quem realmente somos diante dos outros.</p>
-            <p>Mostrar nossa essência assusta. A gente quer ser visto — e, mais ainda: compreendido. Mas o medo da rejeição, do julgamento ou da estranheza dos outros nos faz esconder.</p>
-            <p>Escondemos tão bem, tão fundo... que acabamos esquecendo quem somos de verdade.</p>
-            <blockquote>
-                <p>“Vergonha é o medo de desconexão — a crença de que algo em mim me torna indigno de ser amado.”</p>
-                <p>— Brené Brown, <em>A Coragem de Ser Imperfeito</em></p>
-            </blockquote>
-            <p>Então a gente cresce, muda completamente e fica com aquele pensamento de que antes era melhor. Ou mais fácil. Ou fazia mais sentido. É como se, por dentro, a vida estivesse sem sal — mas o sabor ainda estivesse guardado em algum lugar dentro de você.</p>
-            <p>Talvez isso ajude na convivência com alguém que deseja, porém é extremamente desconfortável a longo prazo, pois o ser humano só se sente realmente bem consigo mesmo quando mostra quem realmente é e vê que as pessoas gostaram disso.</p>
-            <p>Quando você se esconde, está apenas tampando um buraco da estrada. Quando se mostra, revela os buracos dos outros também — mas mostra que, apesar disso, vale a pena andar por ela mesmo com seus defeitos e deformações.</p>
-            <p>Tente fazer isso — ou melhor, as duas coisas — e veja o que realmente é estar bem consigo mesmo.</p>
-
-            <hr>
-
-            <h1 id="chapter2" class="chapter-title">Capítulo 2 — Pensar muda tudo</h1>
-            <p>Se tem uma coisa que aprendi com o tempo, é que a dor molda tudo em você. Os “nãos” que recebemos, a raiva que passamos quando crianças... tudo isso deixa marcas.</p>
-            <p>Mas se você for uma pessoa reflexiva ou pensativa, vai perceber que — em vez de apenas chorar se entregando ao sentimento — faz mais sentido entendê-lo. E aí vai parar para pensar. Refletir se tudo isso realmente faz sentido. Se vale a pena se deixar levar pelos sentimentos e impulsos que essas dores provocam.</p>
-            <p>Principalmente quando você está explodindo por dentro — seja de raiva, tristeza ou até paixão. Algumas pessoas, ao invés de simplesmente aceitarem e se entregarem a esses sentimentos, escolhem entendê-los. E, sinceramente, acho que essa é a forma mais verdadeira de viver.</p>
-            <p>Porque, para mim, sentir é pouco demais. Sentir e entender é a forma mais pura de existência.</p>
-            <blockquote>
-                <p>“Entre o estímulo e a resposta, existe um espaço.</p>
-                <p>Nesse espaço está o nosso poder de escolher nossa resposta.</p>
-                <p>E, nessa escolha, reside nossa liberdade e nosso crescimento.”</p>
-                <p>— Viktor E. Frankl, <em>Em Busca de Sentido</em></p>
-            </blockquote>
-            <p>Isso não significa que você vai encontrar todas as respostas de forma imediata — nem que sua vida ficará melhor só por pensar mais.</p>
-            <p>Lembre-se: quanto mais você sabe, mais se decepciona — justamente porque muitas verdades amargas destroem as doces mentiras em que sua vida estava acomodada.</p>
-            <p>Por isso se frustra: consigo mesmo, com as pessoas ao redor, até mesmo com a vida.</p>
-            <p>Mas não viva sem saber quem você realmente é. E se tiver isso em mãos, não jogue fora. Converse consigo mesmo, encontre a resposta e mostre ao mundo quem você é. E então você encontrará sentido.</p>
-
-            <hr>
-
-            <h1 id="chapter3" class="chapter-title">Capítulo 3 — O que importa não é o que você sente, mas sim o que você faz</h1>
-            <p>Ao longo da minha vida, vivi muitas frustrações e me iludi com histórias fantasiosas na minha cabeça. Muitas vezes, você até sabe que está se enganando — mas não quer aceitar, porque dói demais perder aquilo em que sua vida estava apoiada.</p>
-            <h2>Paixões e ilusões</h2>
-            <p>A paixão, por exemplo, é intensa no começo, mas extremamente passageira. Muitas pessoas confundem isso com amor. Mas, quando a paixão vai embora, o que sobra?</p>
-            <p>Notei que, quando nos sentimos sozinhos ou sem direção — como se a vida tivesse perdido o sabor ou o propósito — buscamos preencher esse vazio com o que for mais acessível: prazeres rápidos, distrações, vícios emocionais. Isso até funciona… por um tempo.</p>
-            <p>Só que há um problema: essas coisas não deixam raiz. Não há recompensa duradoura, só alívio momentâneo. Mesmo que alguém tivesse prazer ilimitado por tempo ilimitado, continua sendo algo sem propósito. É apenas reflexo do instinto — não uma construção. É movimento sem direção.</p>
-            <h2>Sentir não pode ser sua bússola</h2>
-            <p>Percebi também que o que você sente não pode ser seu guia. Sentimentos são reações, respostas a algo externo — não podem ser seu centro de comando.</p>
-            <p>A decisão é uma escolha consciente, não um impulso cego.</p>
-            <p>Sua bússola precisa ser feita de escolhas conscientes. Vontade sem razão é impulso. Impulso sem clareza é só desperdício.</p>
-            <p>Viajar só porque “sentiu” vontade pode parecer liberdade — mas, muitas vezes, é apenas fuga. A tentativa de viver algo que parece bonito na cabeça, mas vazio no fim.</p>
-            <p>E quando isso machuca — como o fim de um relacionamento — a dor não é só pela ausência do outro. É pela ausência da ilusão em que sua vida estava baseada.</p>
-            <blockquote>
-                <p>“Não somos responsáveis pelas emoções, mas sim pelo que fazemos com elas.”</p>
-                <p>— Viktor E. Frankl</p>
-            </blockquote>
-            <h2>Amor é decisão, não impulso</h2>
-            <p>O amor verdadeiro não nasce do que se sente, mas do que se decide. Amor não é um sentimento passageiro. Ele é construído com doação, perdão, persistência.</p>
-            <p>O amor verdadeiro não age pelo retorno — ele age pelo que acredita valer a pena. Ele vai contra o ego. <strong>Amar é seguir firme mesmo quando não compensa. É ter orgulho do próprio ato</strong>.</p>
-            <p>Assim como alguém escolhe continuar um ofício — não só porque gosta, mas porque acredita — o amor se cultiva com prática, constância e intenção.</p>
-            <p>Se você ama, você persiste. Se só “gostava” por causa do que recebia, vai desistir assim que parar de receber.</p>
-            <blockquote>
-                <p>“Amar não é olhar um para o outro, é olhar juntos na mesma direção.”</p>
-                <p>— Antoine de Saint-Exupéry</p>
-            </blockquote>
-            <h2>Sentido acima de sensação</h2>
-            <p>A mensagem é simples:</p>
-            <p><strong>Não se entregue ao que não entende, entenda oque tem se entregado.</strong></p>
-            <p><strong>Não viva procurando um sentimento, viva procurando um sentido.</strong></p>
-            <p>Só nas escolhas conscientes há aprendizado, crescimento e legado. E mesmo que a morte chegue amanhã, você saberá que valeu a pena — porque terá vivido com propósito real.</p>
-
-            <hr>
-
-            <h1 id="chapter4" class="chapter-title">Capítulo 4 – Ilusões confortáveis, fins destrutivos</h1>
-            <p>Adoramos o novo: uma música diferente, um rosto diferente, uma emoção diferente.</p>
-            <p>Um parceiro novo, por exemplo, parece ser o sal que faltava... mas só no começo.</p>
-            <p><strong>Quem busca prazer em ter, e não em construir, está morto</strong>. Mesmo assim, muitos abraçam falsas esperanças em vez de escolhas conscientes.</p>
-            <p>Escutar uma música pela primeira vez é uma experiência única. Mas depois de um tempo... ela enjoa. A magia some.</p>
-            <p>Nosso corpo insiste em dizer que precisamos de mais: outro carro, outro rosto, outra sensação.</p>
-            <p>Mas, no fim, a sensação de insuficiência sempre volta.</p>
-            <p>É aí que entra o autoconhecimento — entender o porquê do que se sente e quem é você no meio disso tudo.</p>
-            <p>A graça da vida não está na novidade — mas no <strong>propósito</strong>. E se você não tem isso, se entrega a qualquer coisa.</p>
-            <p>Se a sua vida não precisa de sentido, o que dirá suas ações?</p>
-            <p>O propósito não está em experimentar tudo. Está em saber o que vale a pena viver.</p>
-            <p>Dedicar-se a algo é construir um tipo de prazer que não te prende, mas te impulsiona.</p>
-            <p>Diferente das experiências vazias, sentimentos são passageiros — mas autoconhecimento, progresso e propósito são permanentes.</p>
-            <p>Já estive dos dois lados. E por mais doce que algo pareça no início, não vale a pena viver por aquilo que termina sem deixar raízes.</p>
-            <p>Nada vale mais a pena do que se tornar a melhor versão de si mesmo para si mesmo. O que vem depois disso é consequência.</p>
-            <blockquote>
-                <p>“Não se contente com algo que seja bom demais para passar, mas medíocre demais para permanecer.”</p>
-                <p>— C.S. Lewis</p>
-            </blockquote>
-            <p>E no final da vida, se alguém te perguntar:</p>
-            <p><strong>"Quem é você?"</strong></p>
-            <p>Você terá orgulho da sua resposta.</p>
-
-            <hr>
-
-            <h1 id="chapter5" class="chapter-title">Capítulo 5 — O que é felicidade?</h1>
-            <p>Você já se fez essa pergunta?</p>
-            <p>Nem todo mundo questiona o que acredita ser bom. A maioria só questiona o que machuca.</p>
-            <p>Mas talvez essa seja uma das perguntas mais importantes:</p>
-            <p><strong>Por que você quer ser feliz?</strong></p>
-            <p><strong>E mais: você sabe mesmo o que é felicidade?</strong></p>
-            <p>Vivemos em um tempo onde é comum ouvir:</p>
-            <blockquote>
-                <p>“Só quero ser feliz.”</p>
-            </blockquote>
-            <p>Mas se você não sabe o que é, ou por que quer isso... sua busca pode se tornar vazia, sem direção.</p>
-            <h2>A ilusão da felicidade como conquista</h2>
-            <p>Muitos acham que felicidade é ter o que se deseja. Mas só percebem a ilusão disso quando finalmente têm tudo — e mesmo assim, não estão felizes.</p>
-            <blockquote>
-                <p>“Cuidado com o que você deseja, porque você pode conseguir.”</p>
-                <p>— Oscar Wilde</p>
-            </blockquote>
-            <p>Felicidade não está na facilidade. Ela nasce quando tudo está difícil — e mesmo assim, você encontra beleza nas pequenas coisas.</p>
-            <p>A sociedade confundiu prazer com felicidade. Mídias, redes, músicas — tudo prega que ser feliz é ter o que quiser.</p>
-            <p>Mas isso só aprisiona na necessidade de sempre “ter mais”.</p>
-            <h2>Felicidade não é satisfação</h2>
-            <p>Felicidade não é prazer.</p>
-            <p>Não é viver se satisfazendo a cada momento.</p>
-            <p>Se fosse, estaríamos sempre insatisfeitos. Isso não é liberdade — é escravidão emocional.</p>
-            <blockquote>
-                <p>“A felicidade não depende do que você tem ou de quem você é.</p>
-                <p>Ela depende unicamente do que você pensa.”</p>
-                <p>— Dale Carnegie</p>
-            </blockquote>
-            <p>A felicidade verdadeira não aparece quando tudo dá certo.</p>
-            <p>Ela aparece quando, mesmo entendendo que deu errado, você encontra valor e aprendizado.</p>
-            <blockquote>
-                <p>“Não é o que acontece com você, mas como você reage ao que acontece que importa.”</p>
-                <p>— Epicteto</p>
-            </blockquote>
-            <h2>Por que você quer ser feliz?</h2>
+            <h1 id="chapter1" class="chapter-title">Capítulo 1 — A busca pela felicidade</h1>
             <p>Muita gente busca “felicidade” — mas o que realmente quer são sensações.</p>
             <p>Ganhar algo pronto nunca tem o peso de construir.</p>
             <blockquote>
@@ -187,7 +64,16 @@
             <p>É saber que, mesmo quando tudo parece errado...</p>
             <p>ainda assim, viver <strong>valeu a pena</strong> — porque teve <strong>sentido</strong>.</p>
         </div>
+    </main>
+
+    <!-- NOVO: Modal para Comentários -->
+    <div id="comments-modal-overlay" class="comments-modal-overlay">
+        <div id="comments-modal-content" class="comments-modal-content">
+            <button id="close-comments-btn" class="close-comments-btn" aria-label="Fechar comentários">X</button>
+            <iframe id="comments-iframe" src="https://livro-comentarios.netlify.app/" frameborder="0"></iframe>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
