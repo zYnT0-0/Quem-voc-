@@ -141,7 +141,7 @@ body[data-theme="dark"] #sun-icon { display: none; }
     background-position: center;
     margin: 0;
     padding: 0;
-    border-radius: 0;
+    border-radius: 15px, 15px,;
     display: flex;
     flex-direction: column;
     justify-content: center;
