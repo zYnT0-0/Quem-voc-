@@ -307,7 +307,6 @@ em {
     height: 100%;
     border: none; /* Remove a borda padrão do iframe */
     border-radius: 0; /* REMOVIDO: Borda arredondada do iframe */
-    /* overflow: hidden; <-- REMOVIDO DAQUI, POIS O PAI JÁ CUIDA */
 }
 
 /* Responsividade para o modal */
