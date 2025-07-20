@@ -121,48 +121,47 @@ body[data-theme="light"] #moon-icon { display: none; }
 body[data-theme="dark"] #sun-icon { display: none; }
 
 .book-container {
-    width: 95vw;
-    max-width: 1000px;
+    width: 100vw;
+    max-width: 100%;
     background-color: var(--book-bg-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     border-radius: 0;
-    margin: 30px auto;
-    overflow: hidden;
-    padding-top: 0;
+    margin: 0;
+    padding: 0;
     position: relative;
     z-index: 1;
 }
 
+
 .cover {
     position: relative;
-    width: 100%;
-    height: 100vh;
-    background-image: url('desenho.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    border-radius: 0 0 20px 20px;
-    overflow: hidden;
+    width: 100vw;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.cover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.cover-img {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    height: auto;
+    display: block;
     border-radius: 0 0 20px 20px;
-    transition: background 0.3s ease;
 }
+
+.book-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Merriweather', serif;
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    text-align: center;
+    padding: 0 20px;
+}
+
 
 
 body[data-theme="dark"] .cover::before {
