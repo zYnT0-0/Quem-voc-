@@ -134,7 +134,7 @@ body[data-theme="dark"] #sun-icon { display: none; }
 .cover {
     position: relative;
     width: 100%;
-    height: 80vh; /* ou 100vh, se quiser ocupar a tela toda */
+    height: 100vh; /* ou 100vh, se quiser ocupar a tela toda */
     background-image: url('desenho.jpg');
     background-size: contain;
     background-repeat: no-repeat;
