@@ -1,306 +1,615 @@
-/* Importar fontes do Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap');
-
-:root {
-    --primary-text-color: #333;
-    --secondary-text-color: #555;
-    --bg-color: #f9f9f9;
-    --book-bg-color: #fff;
-    --border-color: #eee;
-    --blockquote-border-color: #ccc;
-    --chapter-title-color: #222;
-    --button-bg: #e0e0e0;
-    --button-text: #333;
-    --button-hover-bg: #d0d0d0;
-    --progress-bar-color: #007bff;
-
-    --base-font-size: 1.1rem;
-    --font-primary: 'Merriweather', serif;
-    --font-secondary: 'Open Sans', sans-serif;
-    --font-monospace: 'Roboto Mono', monospace;
-}
-
-body[data-theme="dark"] {
-    --primary-text-color: #e0e0e0;
-    --secondary-text-color: #b0b0b0;
-    --bg-color: #1a1a1a;
-    --book-bg-color: #2b2b2b;
-    --border-color: #444;
-    --blockquote-border-color: #777;
-    --chapter-title-color: #f0f0f0;
-    --button-bg: #444;
-    --button-text: #e0e0e0;
-    --button-hover-bg: #555;
-    --progress-bar-color: #8ab4f8;
-}
-
 body {
-    font-family: var(--font-primary);
-    font-size: var(--base-font-size);
-    line-height: 1.6;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--primary-text-color);
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
     min-height: 100vh;
+    background-color: #f0f2f5; /* Light mode background */
+    color: #333; /* Light mode text color */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #2c2f33; /* Darker background */
+    color: #e0e6eb; /* Lighter text color */
+}
+
+body.dark-mode .container,
+body.dark-mode .comment,
+body.dark-mode .login-area,
+body.dark-mode .alert-box,
+body.dark-mode #custom-modal-content,
+body.dark-mode .reply-box {
+    background-color: #36393f; /* Darker card background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: #40444b;
+    color: #e0e6eb;
+    border: 1px solid #555;
+}
+
+body.dark-mode button {
+    background-color: #7289da; /* Discord-like blue */
+    color: white;
+}
+
+body.dark-mode button:hover {
+    background-color: #677bc4;
+}
+
+body.dark-mode .comment-author,
+body.dark-mode .comment-timestamp {
+    color: #bbb;
+}
+
+body.dark-mode .is-reply-to-me {
+    background-color: #4a4d52; /* Slightly different background for replies to me in dark mode */
+}
+
+/* Header */
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--book-bg-color);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #4a90e2; /* A shade of blue */
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+/* User Info & Controls */
+.login-area {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto; /* Centraliza e adiciona margem */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding: 15px 20px;
-    z-index: 1000;
-    box-sizing: border-box;
+    gap: 15px; /* Espaço entre os itens */
+    max-width: 900px; /* Largura máxima para login-area */
+    width: 95%; /* Ocupa 95% da largura disponível */
 }
 
-#progress-bar-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background-color: var(--border-color);
+#user-info {
+    font-weight: bold;
+    color: #444;
+    text-align: center;
+    flex-grow: 1; /* Permite que o texto ocupe o espaço disponível */
+    min-width: 200px; /* Largura mínima para o user-info não ficar muito espremido */
 }
 
-#progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: var(--progress-bar-color);
-    transition: width 0.1s ease-out;
+#user-count {
+    background-color: #eee;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #666;
 }
 
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    align-items: center;
-}
-
-.controls button, .controls select {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-    border: 1px solid var(--border-color);
-    padding: 8px 12px;
+.login-area button {
+    padding: 10px 15px;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.controls button:hover, .controls select:hover {
-    background-color: var(--button-hover-bg);
-    border-color: var(--primary-text-color);
-}
-
-.theme-icon {
-    width: 20px;
-    height: 20px;
-    display: none;
-    vertical-align: middle;
-}
-
-body[data-theme="light"] #sun-icon { display: block; }
-body[data-theme="dark"] #moon-icon { display: block; }
-body[data-theme="light"] #moon-icon { display: none; }
-body[data-theme="dark"] #sun-icon { display: none; }
-
-.book-container {
-    width: 95vw;
-    max-width: 1000px;
-    background-color: var(--book-bg-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin: 40px auto 20px;
-    overflow: hidden;
-    padding-top: 0;
-}
-
-.cover {
-    position: relative;
-    width: 100%;
-    min-height: 60vh; /* define uma altura mínima, ajustável */
-    background-image: url('desenho.png');
-    background-size: cover; /* preenche todo o espaço da div */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #000;
-    border-radius: 15px 15px 0 0;
-    text-align: center;
-    overflow: hidden;
-    margin-top: 90px;
-}
-
-.book-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Merriweather', serif;
-    font-size: 3.8em;
-    z-index: 1;
-    color: #fff;
-    padding: 0 20px;
-    text-align: center;
-    white-space: nowrap;         /* ⚠️ impede quebra de linha */
-    overflow: hidden;            /* evita ultrapassar a borda */
-    text-overflow: ellipsis;     /* opcional: coloca \"...\" se faltar espaço */
-    max-width: 90vw;             /* garante que cabe em telas estreitas */
-}
-
-
-
-body[data-theme="dark"] .cover::before {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.start-reading-button {
     background-color: #007bff;
     color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
-    z-index: 1;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+.login-area button:hover {
+    background-color: #0056b3;
+}
+
+#theme-toggle {
+    background-color: #6c757d;
+}
+#theme-toggle:hover {
+    background-color: #5a6268;
+}
+
+/* Main Content Container */
+.container {
+    flex: 1; /* Ocupa o espaço restante */
+    max-width: 900px; /* Aumenta a largura máxima para PCs */
+    width: 95%; /* Garante que ele ocupe a largura total em telas menores */
+    margin: 20px auto; /* Centraliza o container */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Comment Form */
+#comment-form {
     display: flex;
-    justify-content: center;
-    margin: auto;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#comment-form input[type="text"],
+#comment-form textarea {
+    width: calc(100% - 20px); /* Ajusta a largura para padding */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+#comment-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+#comment-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    font-size: 1.1em;
+    transition: background-color 0.2s;
+}
+
+#comment-form button:hover {
+    background-color: #218838;
+}
+
+/* Reply Box */
+.reply-box {
+    background-color: #e9ecef;
+    border-left: 5px solid #007bff;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    display: none; /* Hidden by default */
+}
+
+body.dark-mode .reply-box {
+    background-color: #4a4d52;
+    border-color: #7289da;
+}
+
+.reply-box .reply-message {
+    font-style: italic;
+    color: #555;
+    font-size: 0.9em;
+}
+
+body.dark-mode .reply-box .reply-message {
+    color: #ccc;
+}
+
+.reply-box .cancel-reply-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.reply-box .cancel-reply-btn:hover {
+    color: #c82333;
+}
+
+
+/* Comments Section */
+#comments {
     margin-top: 20px;
 }
 
-.start-reading-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+.comment {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    word-wrap: break-word; /* Prevents long words from overflowing */
 }
 
-.chapter-content {
-    padding: 30px;
-    text-align: justify;
+/* Style for replies to the logged-in user */
+.comment.is-reply-to-me {
+    border: 2px solid #007bff; /* Highlight border */
+    background-color: #e7f3ff; /* Lighter background */
 }
 
-.chapter-title {
-    font-family: 'Merriweather', serif;
-    font-size: 2em;
-    color: var(--chapter-title-color);
-    margin-bottom: 20px;
-    text-align: center;
-    line-height: 1.3;
-    transition: color 0.3s ease;
+body.dark-mode .comment.is-reply-to-me {
+    border-color: #7289da;
+    background-color: #4a4d52;
 }
 
-p {
-    margin-bottom: 1em;
-    color: var(--secondary-text-color);
-    transition: color 0.3s ease;
+.comment.own {
+    border-left: 5px solid #007bff; /* Blue border for own comments */
 }
 
-h2 {
-    font-family: 'Merriweather', serif;
-    font-size: 1.5em;
-    color: var(--chapter-title-color);
-    margin-top: 2em;
-    margin-bottom: 0.8em;
-    text-align: center;
-    transition: color 0.3s ease;
+body.dark-mode .comment.own {
+    border-left-color: #7289da;
 }
 
-blockquote {
-    border-left: 4px solid var(--blockquote-border-color);
-    padding-left: 20px;
-    margin: 1.5em 0;
+.comment.admin {
+    border-left: 5px solid #ffc107; /* Yellow border for admin comments */
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #0056b3;
+    margin-right: 10px;
+}
+
+.comment-timestamp {
+    font-size: 0.8em;
+    color: #888;
+}
+
+.admin-icon {
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.comment-message {
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+/* Reply Block inside comments */
+.comment-reply-block {
+    background-color: #e0e0e0;
+    border-left: 3px solid #ccc;
+    padding: 8px 12px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+body.dark-mode .comment-reply-block {
+    background-color: #555;
+    border-left-color: #777;
+}
+
+.comment-reply-block .reply-block-author {
+    font-weight: bold;
+    color: #007bff;
+    display: block; /* Ensures author is on its own line */
+    margin-bottom: 3px;
+}
+
+body.dark-mode .comment-reply-block .reply-block-author {
+    color: #9abaff;
+}
+
+.comment-reply-block .reply-block-message {
     font-style: italic;
-    color: var(--secondary-text-color);
-    transition: border-color 0.3s ease, color 0.3s ease;
+    color: #666;
 }
 
-blockquote p {
-    margin: 0.5em 0;
+body.dark-mode .comment-reply-block .reply-block-message {
+    color: #bbb;
 }
 
-hr {
+.comment-reply-block.comment-reply-deleted {
+    background-color: #ffe0e0;
+    border-left-color: #dc3545;
+}
+
+body.dark-mode .comment-reply-block.comment-reply-deleted {
+    background-color: #663333;
+    border-left-color: #dc3545;
+}
+
+.comment-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas pequenas */
+}
+
+.comment-actions button {
+    padding: 8px 12px;
     border: none;
-    border-top: 1px dashed var(--border-color);
-    margin: 40px 0;
-    transition: border-color 0.3s ease;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
 }
 
-strong {
-    font-weight: 700;
-    color: var(--primary-text-color);
-    transition: color 0.3s ease;
+.comment-actions button:not(.admin-buttons button) { /* Estilos para botões de ação comuns */
+    background-color: #6c757d;
+    color: white;
 }
 
-em {
-    font-style: italic;
+.comment-actions button:not(.admin-buttons button):hover {
+    background-color: #5a6268;
 }
 
-@media (max-width: 768px) {
-    .book-title {
-        font-size: 2.5em;
+.comment-actions .admin-buttons {
+    margin-left: auto; /* Empurra os botões de admin para a direita */
+    display: flex;
+    gap: 10px;
+}
+
+.comment-actions .admin-buttons button {
+    background-color: #dc3545; /* Red for delete/ban */
+    color: white;
+}
+
+.comment-actions .admin-buttons button:hover {
+    background-color: #c82333;
+}
+
+
+/* Alert Box */
+.alert-box {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 1.1em;
+    max-width: 90%; /* Garante que não ultrapasse a tela em mobile */
+    text-align: center;
+}
+
+.alert-box.error-alert {
+    background-color: #dc3545;
+}
+
+/* Custom Modal (Prompt/Alert) */
+#custom-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Adicionado padding para garantir espaçamento em telas muito pequenas */
+    box-sizing: border-box; /* Garante que o padding não adicione à largura/altura total */
+}
+
+#custom-modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%; /* Garante que seja responsivo */
+    text-align: center;
+}
+
+#modal-message {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+#modal-input, #modal-textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+#modal-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+#custom-modal-content button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+#modal-confirm-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+#modal-confirm-btn:hover {
+    background-color: #0056b3;
+}
+
+#modal-cancel-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+#modal-cancel-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Mention Suggestions */
+#mention-suggestions {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    z-index: 999;
+    position: absolute; /* Ajustado para posicionamento relativo ao seu container, se necessário */
+    width: calc(100% - 20px); /* Ajusta para a largura do input */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: none; /* Hidden by default */
+}
+
+body.dark-mode #mention-suggestions {
+    background-color: #36393f;
+    border-color: #555;
+}
+
+.mention-item {
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.mention-item:hover {
+    background-color: #f0f0f0;
+}
+
+body.dark-mode .mention-item:hover {
+    background-color: #40444b;
+}
+
+/* Footer (for the image and button) */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #f0f2f5; /* Match body background */
+    position: relative; /* Para posicionamento do botão */
+    /* Remove min-height para permitir que o conteúdo determine a altura */
+    display: flex; /* Usar flexbox para centralizar a imagem e o botão */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centraliza verticalmente o conteúdo no footer */
+    gap: 20px; /* Espaço entre a imagem e o botão */
+}
+
+body.dark-mode footer {
+    background-color: #2c2f33;
+}
+
+footer img {
+    max-width: 100%; /* Garante que a imagem seja responsiva */
+    height: auto;
+    display: block; /* Remove espaço extra abaixo da imagem */
+    border-radius: 8px; /* Opcional: bordas arredondadas para a imagem */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para a imagem */
+}
+
+/* Button below the image */
+#start-reading-btn {
+    padding: 12px 25px;
+    background-color: #007bff; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+#start-reading-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Media Queries for larger screens */
+@media (min-width: 768px) {
+    header h1 {
+        font-size: 2.5em; /* Aumenta o tamanho do título em telas maiores */
     }
 
-    .chapter-title {
-        font-size: 1.8em;
+    .login-area {
+        justify-content: space-between; /* Espaça os itens melhor em telas maiores */
+        padding: 25px;
+        font-size: 1.1em;
     }
 
-    .chapter-content {
+    #user-info {
+        font-size: 1.2em;
+    }
+
+    .login-area button {
+        padding: 12px 20px;
+        font-size: 1.1em;
+    }
+
+    #comment-form input[type="text"],
+    #comment-form textarea {
+        font-size: 1.1em;
+        padding: 12px;
+    }
+
+    #comment-form button {
+        font-size: 1.2em;
+    }
+
+    .comment {
         padding: 20px;
+        font-size: 1.05em;
     }
 
-    .controls button, .controls select {
-        padding: 6px 10px;
-        font-size: 0.8em;
-    }
-}
-
-@media (max-width: 480px) {
-    .book-container {
-        margin: 5px;
-        width: 98vw;
-        border-radius: 0;
-        box-shadow: none;
-        padding-top: 60px;
+    .comment-author {
+        font-size: 1.1em;
     }
 
-    .cover {
-        height: 50vh;
-        border-radius: 0;
+    .comment-timestamp {
+        font-size: 0.9em;
     }
 
-    .book-title {
-        font-size: 2em;
+    .comment-actions button {
+        padding: 10px 15px;
+        font-size: 1em;
     }
 
-    .chapter-title {
-        font-size: 1.5em;
+    .alert-box {
+        font-size: 1.2em;
+        padding: 20px 30px;
     }
 
-    .chapter-content {
-        padding: 15px;
+    #custom-modal-content {
+        padding: 40px;
     }
 
-    header {
-        padding: 10px;
+    #modal-message {
+        font-size: 1.2em;
     }
 
-    .controls {
-        justify-content: center;
-        gap: 8px;
+    #modal-input, #modal-textarea {
+        font-size: 1.1em;
+    }
+
+    #custom-modal-content button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+
+    #mention-suggestions {
+        width: calc(100% - 24px); /* Ajusta para padding do input */
     }
 }
