@@ -133,7 +133,7 @@ body[data-theme="dark"] #sun-icon { display: none; }
     position: relative;
     width: 100%;
     min-height: 60vh; /* define uma altura mínima, ajustável */
-    background-image: url('desenho.png');
+    background-image: url('desenho.jpg');
     background-size: cover; /* preenche todo o espaço da div */
     background-repeat: no-repeat;
     background-position: center;
