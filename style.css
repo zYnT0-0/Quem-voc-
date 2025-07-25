@@ -88,6 +88,10 @@ header {
     flex-wrap: wrap; /* Garante que os botões quebrem em múltiplas linhas se necessário */
 }
 
+book-cover-image {
+filter: contrast(105%); /* Um aumento de 5% no contraste */
+}
+
 @media (min-width: 768px) {
     .controls {
         flex-grow: 1; /* Permite que os controles ocupem espaço disponível */
