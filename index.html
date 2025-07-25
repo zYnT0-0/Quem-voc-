@@ -6,7 +6,23 @@
     <title>Quem é você?</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-theme="light"> <header>
+<body data-theme="light"> 
+    
+    <!-- Botão flutuante de comentários -->
+<button id="comments-toggle" aria-label="Abrir comentários">💬</button>
+
+<!-- Painel de comentários -->
+<div id="comments-panel">
+  <button id="close-comments" aria-label="Fechar comentários">✖</button>
+  <iframe
+    src="https://livro-comentarios.netlify.app/"
+    title="Comentários do Livro"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin allow-forms"
+  ></iframe>
+</div>
+    
+    <header>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
@@ -17,24 +33,34 @@
             </button>
             <button id="font-size-decrease" aria-label="Diminuir tamanho da fonte">A-</button>
             <button id="font-size-increase" aria-label="Aumentar tamanho da fonte">A+</button>
-            <select id="font-family-select" aria-label="Selecionar tipo de fonte">
-                <option value="Merriweather">Serifada (Padrão)</option>
-                <option value="Open Sans">Sem Serifas</option>
-                <option value="monospace">Monoespaçada</option>
-            </select>
+            <div class="custom-select" id="custom-font-selector" aria-label="Selecionar tipo de fonte">
+                <button class="selected-font">Serifada (Padrão)</button>
+                
+                <ul class="font-options hidden">
+                    <li data-value="Merriweather">Serifada (Padrão)</li>
+                    <li data-value="Open Sans">Sem Serifas</li>
+                    <li data-value="monospace">Monoespaçada</li>
+                </ul>
+</div>
+
         </div>
+        <nav id="table-of-contents">
+            <button id="toc-toggle" aria-label="Alternar Sumário">Sumário</button>
+            <ul id="toc-list" class="hidden">
+                </ul>
+        </nav>
     </header>
 
     <div class="book-container">
         <div class="cover" id="book-cover">
             <h1 class="book-title">Quem é você?</h1>
-
+             <img src="desenho.png" alt="Capa do livro Quem é você?" class="book-cover-image">
+             
+            
         </div>
         
-                    <button id="start-reading" class="start-reading-button">Começar a Ler</button>
-        
         <div class="chapter-content">
-            <h1 id="chapter1" class="chapter-title">Capítulo 1 — Introdução: Quem é você?</h1>
+            <h1 id="chapter1" class="chapter-title">Capítulo 1 — Quem é você?</h1>
             <p>Você não está perdido. Desde o início das nossas vidas, escondemos quem somos — e, muitas vezes, escondemos isso de nós mesmos. Por quê? Bom, penso que pode ser por várias razões. Uma delas talvez seja o medo... ou a vergonha de ser quem realmente somos diante dos outros.</p>
             <p>Mostrar nossa essência assusta. A gente quer ser visto — e, mais ainda: compreendido. Mas o medo da rejeição, do julgamento ou da estranheza dos outros nos faz esconder.</p>
             <p>Escondemos tão bem, tão fundo... que acabamos esquecendo quem somos de verdade.</p>
@@ -150,8 +176,7 @@
             <p>Não é viver se satisfazendo a cada momento.</p>
             <p>Se fosse, estaríamos sempre insatisfeitos. Isso não é liberdade — é escravidão emocional.</p>
             <blockquote>
-                <p>“A felicidade não depende do que você tem ou de quem você é.</p>
-                <p>Ela depende unicamente do que você pensa.”</p>
+                <p>“A felicidade da sua vida depende da qualidade dos seus pensamentos.”</p>
                 <p>— Dale Carnegie</p>
             </blockquote>
             <p>A felicidade verdadeira não aparece quando tudo dá certo.</p>

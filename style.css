@@ -27,197 +27,467 @@ body[data-theme="dark"] {
     --book-bg-color: #2b2b2b;
     --border-color: #444;
     --blockquote-border-color: #777;
-    --chapter-title-color: #f0f0f0;
+    --chapter-title-color: #eee;
     --button-bg: #444;
     --button-text: #e0e0e0;
     --button-hover-bg: #555;
-    --progress-bar-color: #8ab4f8;
+    --progress-bar-color: #4CAF50; /* Um verde diferente para o tema escuro */
 }
 
 body {
     font-family: var(--font-primary);
     font-size: var(--base-font-size);
     line-height: 1.6;
+    color: var(--primary-text-color);
+    background-color: var(--bg-color);
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--primary-text-color);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease;
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* Garante que padding e borda sejam incluídos na largura/altura */
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
     background-color: var(--book-bg-color);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Distribui itens entre as extremidades em telas maiores */
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding: 15px 20px;
+    position: sticky;
+    top: 0;
     z-index: 1000;
-    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    flex-wrap: wrap; /* Permite que os itens se quebrem em linhas menores */
 }
 
 #progress-bar-container {
+    width: 100%;
+    height: 4px;
+    background-color: var(--border-color);
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 5px;
-    background-color: var(--border-color);
+    transition: background-color 0.3s ease;
 }
 
 #progress-bar {
     height: 100%;
     width: 0%;
     background-color: var(--progress-bar-color);
-    transition: width 0.1s ease-out;
+    transition: width 0.1s linear, background-color 0.3s ease;
 }
 
 .controls {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap; /* Garante que os botões quebrem em múltiplas linhas se necessário */
 }
 
-.controls button, .controls select {
+@media (min-width: 768px) {
+    .controls {
+        flex-grow: 1; /* Permite que os controles ocupem espaço disponível */
+        justify-content: flex-start; /* Alinha à esquerda em telas maiores */
+        margin-right: 20px; /* Espaçamento entre os controles e o sumário */
+        margin-bottom: 0; /* Garante que não haja margem inferior em telas maiores */
+    }
+    #table-of-contents {
+        margin-left: auto; /* Empurra para a direita */
+        margin-right: 10px; /* Mantém um pequeno espaçamento da borda */
+        width: auto; /* Largura automática para o botão em telas grandes */
+        text-align: right; /* Alinha o texto do botão à direita em telas maiores */
+    }
+}
+
+/* Media Query para telas menores */
+@media (max-width: 767px) {
+    header {
+        flex-direction: column; /* Empilha os itens verticalmente */
+        align-items: center; /* Centraliza os itens na coluna */
+        padding: 10px; /* Ajusta o padding do cabeçalho em telas menores */
+    }
+    #table-of-contents { /* Botão Sumário */
+        width: 100%; /* Ocupa a largura total para permitir centralização */
+        margin: 10px auto 0 auto; /* Centraliza o elemento e adiciona margem superior */
+        text-align: center; /* Centraliza o texto do botão "Sumário" */
+        order: 1; /* Move o sumário para a primeira linha */
+    }
+    .controls { /* Demais botões de controle */
+        width: 100%; /* Ocupa toda a largura em telas pequenas */
+        justify-content: center; /* Centraliza os botões em telas pequenas */
+        margin-top: 10px;
+        order: 2; /* Move os controles para a segunda linha */
+        margin-bottom: 0; /* Remove a margem inferior para não afetar o sumário */
+    }
+    
+        #toc-list {
+        position: absolute; /* MUITO IMPORTANTE: Mudar de static para absolute para controlar a posição */
+        width: 95%; /* Ajusta a largura da lista do sumário */
+        left: 50%; /* Centraliza horizontalmente */
+        transform: translateX(-50%); /* Garante centralização perfeita */
+        top: calc(100% + 5px); /* Abre abaixo do botão "Sumário" */
+        margin: 0; /* Remover margem auto */
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Adicionar sombra de volta para o popup */
+        border: 1px solid var(--border-color); /* Adicionar borda de volta */
+        border-radius: 10px;
+        background-color: var(--book-bg-color);
+        max-height: 250px; /* Ajusta a altura máxima */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .custom-select {
+        width: 100%; /* Garante que o dropdown de fontes ocupe toda a largura */
+        margin-top: 5px; /* Adiciona um pequeno espaço entre ele e os outros botões */
+    }
+    .selected-font {
+        width: 100%;
+    }
+    .font-options {
+        position: static; /* Permite que as opções de fonte fluam naturalmente */
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+    .book-title {
+        font-size: 0.2em; /* Mantenha esta linha se já existir */
+        
+    }
+    .chapter-title {
+        font-size: 1.6em; /* Reduz o tamanho da fonte do título do capítulo */
+    }
+    .chapter-content, .cover {
+        padding: 20px; /* Reduz o padding em telas menores */
+        width: 95%; /* Aumenta a largura para ocupar mais espaço */
+    }
+    .controls button, .controls select, #toc-toggle {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+}
+
+/* --- Ajustes para telas MUITO pequenas (ex: largura < 400px) --- */
+@media (max-width: 399px) {
+
+    /* Ajustes para o cabeçalho e seus controles */
+    header {
+        padding: 5px 10px; /* Reduzir ainda mais o padding do header */
+    }
+
+    .controls {
+        gap: 5px; /* Reduzir o espaçamento entre os botões */
+    }
+
+    .controls button,
+    .controls select,
+    #toc-toggle {
+        padding: 6px 8px; /* Reduzir o padding dos botões */
+        font-size: 0.8em; /* Diminuir um pouco mais o tamanho da fonte dos botões */
+    }
+
+    #toc-toggle {
+        width: 80px; /* Se o "Sumário" estiver quebrando, ajuste o width */
+        font-size: 0.8em; /* Ajustar fonte do botão do sumário */
+    }
+
+    /* Ajustes para a capa e o conteúdo do capítulo */
+    .cover,
+    .chapter-content {
+        padding: 15px; /* Reduzir o padding para o mínimo */
+        width: 95%; /* Maximizar a largura, o padding será o único espaçamento lateral */
+        border-radius: 10px; /* Remover bordas arredondadas para maximizar espaço se necessário */
+        box-shadow: none; /* Remover sombra para um visual mais "cheio" na tela */
+
+    }
+
+    .cover {
+        min-height: auto; /* Permite que a altura da capa se ajuste ao conteúdo */
+    }
+
+    /* Ajuste do título para telas muito pequenas */
+    .book-title {
+        font-size: 2em; /* Ajuste o tamanho da fonte do título */
+        margin-top: 0px; /* Reduzir margens */
+        margin-bottom: 20px;
+        white-space: nowrap; /* Tira a quebra de linha do título */
+        overflow: hidden; /* Garante que o texto que transborda seja oculto */
+        text-overflow: ellipsis; /* Adiciona "..." se o texto transbordar */
+    }
+
+    /* Ajuste do título do capítulo */
+    .chapter-title {
+        font-size: 1.4em; /* Pode ser necessário diminuir ainda mais */
+        margin-top: 1em;
+        margin-bottom: 0.5em;
+    }
+
+    /* Ajustes para parágrafos e outros textos, se necessário */
+    .chapter-content p {
+        font-size: 0.95em; /* Ligeiramente menor para caber mais texto */
+    }
+
+    blockquote {
+        padding-left: 10px; /* Reduzir padding do blockquote */
+        margin: 1em 0; /* Reduzir margem */
+    }
+
+    hr {
+        border: none;
+        border-top: 1px dashed var(--border-color);
+        margin: 20px 0; /* Reduzir margem do hr */
+    }
+
+    /* Ajustes para a lista do sumário se ela estiver com problemas */
+    #toc-list {
+        min-width: unset; /* Remove min-width */
+        width: 95%; /* Ocupa quase toda a largura disponível */
+        left: 50%; /* Centraliza */
+        transform: translateX(-50%); /* Garante centralização */
+        padding: 5px; /* Menos padding */
+        max-height: 250px; /* Pode diminuir a altura máxima para evitar sobrepor muito */
+    }
+
+    #toc-list li a {
+        padding: 8px 10px; /* Reduzir padding dos itens do sumário */
+        font-size: 0.85em; /* Diminuir fonte dos itens do sumário */
+        margin: 4px 0; /* Reduzir margem entre itens */
+        white-space: normal; /* Permite que o texto do capítulo quebre linhas */
+        overflow: visible; /* Garante que o conteúdo não seja ocultado */
+        text-overflow: clip; /* Impede "..." e mostra o texto completo */
+    }
+}
+
+
+
+
+.controls button,
+.controls select {
     background-color: var(--button-bg);
     color: var(--button-text);
     border: 1px solid var(--border-color);
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     font-size: 0.9em;
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.controls button:hover, .controls select:hover {
+.controls button:hover,
+.controls select:hover {
     background-color: var(--button-hover-bg);
-    border-color: var(--primary-text-color);
+}
+
+/* Regras para remover o outline e garantir acessibilidade */
+button,
+select,
+a,
+#toc-toggle {
+    outline: none !important;
+}
+
+/* Foco visual personalizado para acessibilidade */
+button:focus-visible,
+a:focus-visible,
+#toc-toggle:focus-visible {
+    box-shadow: 0 0 0 2px var(--progress-bar-color), 0 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+#theme-toggle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.226);
 }
 
 .theme-icon {
     width: 20px;
     height: 20px;
+    fill: currentColor;
     display: none;
-    vertical-align: middle;
 }
 
-body[data-theme="light"] #sun-icon { display: block; }
-body[data-theme="dark"] #moon-icon { display: block; }
-body[data-theme="light"] #moon-icon { display: none; }
-body[data-theme="dark"] #sun-icon { display: none; }
+.theme-icon.active {
+    display: block;
+}
 
-.book-container {
-    width: 95vw;
-    max-width: 1000px;
+/* Estilos do Sumário */
+#table-of-contents {
+    position: relative;
+    /* Alinhado à direita em telas maiores, ou centralizado em telas menores */
+    /* Removido margin-left: auto e margin-right: 10px daqui para serem definidos na media query */
+    width: auto; /* Largura automática para o botão em telas grandes */
+}
+
+#toc-toggle {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    font-size: 0.9em;
+    white-space: nowrap;
+    font-weight: 600;
+    width: 100px; /* Largura fixa para o botão do sumário */
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.226);
+}
+
+#toc-toggle:hover {
+    background-color: var(--button-hover-bg);
+}
+
+#toc-list {
+    position: absolute;
+    top: 100%;
+    right: 0; /* Alinha à direita do botão "Sumário" em telas grandes */
     background-color: var(--book-bg-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin: 40px auto 20px;
-    overflow: hidden;
-    padding-top: 0;
+    border: none;
+    border-radius: 10px;
+    list-style: none;
+    padding: 8px;
+    margin: 5px 0 0 0;
+    min-width: 200px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    transition: all 0.2s ease-out;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden; /* Garante que não haja scroll horizontal */
+}
+
+#toc-list.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+#toc-list:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#toc-list li a {
+    display: block;
+    padding: 8px 15px;
+    color: var(--primary-text-color);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 0.95em;
+    white-space: nowrap; /* Removido para telas pequenas na media query abaixo */
+    overflow: hidden; /* Removido para telas pequenas na media query abaixo */
+    text-overflow: ellipsis; /* Removido para telas pequenas na media query abaixo */
+    border: none;
+    border-radius: 5px;
+    margin: 4px 0;
+    text-align: left;
+
+}
+
+#toc-list li a:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--button-text);
+    border-color: var(--button-hover-bg);
+}
+
+#toc-list li a:focus,
+#toc-list li a:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Layout do livro */
+.book-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+    width: 100%; /* Garante que o container ocupe a largura total disponível */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
 }
 
 .cover {
-    position: relative;
-    width: 100%;
-    min-height: 60vh; /* define uma altura mínima, ajustável */
-    background-image: url('desenho.jpg');
-    background-size: cover; /* preenche todo o espaço da div */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #000;
-    border-radius: 15px 15px 0 0;
+    background-color: var(--book-bg-color);
+    border-radius: 8px 8px 0px 0px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
     text-align: center;
-    overflow: hidden;
-    margin-top: 90px;
+    margin-bottom: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    width: 90%;
+    max-width: 800px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Inclui padding na largura total */
 }
 
 .book-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Merriweather', serif;
-    font-size: 3.8em;
+    font-family: var(--font-primary);
+    font-size: 3em;
+    font-style: italic;
+    color: var(--primary-text-color);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.247);
     z-index: 1;
-    color: #fff;
-    padding: 0 20px;
-    text-align: center;
-    white-space: nowrap;         /* ⚠️ impede quebra de linha */
-    overflow: hidden;            /* evita ultrapassar a borda */
-    text-overflow: ellipsis;     /* opcional: coloca \"...\" se faltar espaço */
-    max-width: 90vw;             /* garante que cabe em telas estreitas */
+    word-wrap: break-word; /* Permite que o título quebre linhas se for muito longo */
 }
 
-
-
-body[data-theme="dark"] .cover::before {
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.start-reading-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
-    z-index: 1;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    margin: auto;
+.book-cover-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
     margin-top: 20px;
-}
-
-.start-reading-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.671);
 }
 
 .chapter-content {
-    padding: 30px;
+    background-color: var(--book-bg-color);
+    border-radius: 0px 0px 8px 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px ;
+    width: 90%; /* Ajustado para 90% para consistência com a capa */
+    max-width: 800px;
+    margin: 0px 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     text-align: justify;
+    box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+.chapter-content p {
+    margin-bottom: 1em;
+    font-size: 1em;
+    transition: color 0.3s ease;
+    word-wrap: break-word; /* Garante que o texto quebre linhas */
 }
 
 .chapter-title {
-    font-family: 'Merriweather', serif;
-    font-size: 2em;
-    color: var(--chapter-title-color);
-    margin-bottom: 20px;
-    text-align: center;
-    line-height: 1.3;
-    transition: color 0.3s ease;
-}
-
-p {
-    margin-bottom: 1em;
-    color: var(--secondary-text-color);
-    transition: color 0.3s ease;
-}
-
-h2 {
-    font-family: 'Merriweather', serif;
-    font-size: 1.5em;
+    font-family: var(--font-primary);
+    font-size: 2.2em;
     color: var(--chapter-title-color);
     margin-top: 2em;
     margin-bottom: 0.8em;
     text-align: center;
     transition: color 0.3s ease;
+    word-wrap: break-word; /* Garante que o título do capítulo quebre linhas */
 }
 
 blockquote {
@@ -250,57 +520,242 @@ em {
     font-style: italic;
 }
 
-@media (max-width: 768px) {
-    .book-title {
-        font-size: 2.5em;
-    }
-
-    .chapter-title {
-        font-size: 1.8em;
-    }
-
-    .chapter-content {
-        padding: 20px;
-    }
-
-    .controls button, .controls select {
-        padding: 6px 10px;
-        font-size: 0.8em;
-    }
+/* Estilos do dropdown de fontes personalizado */
+.custom-select {
+    position: relative;
+    width: 180px; /* Aumentado para melhor visualização do texto completo */
+    font-family: var(--font-secondary);
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
 }
 
-@media (max-width: 480px) {
-    .book-container {
-        margin: 5px;
-        width: 98vw;
-        border-radius: 0;
-        box-shadow: none;
-        padding-top: 60px;
+.selected-font {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    width: 80%;
+    text-align: center; /* Centraliza o texto no botão */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.226);
+    box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+.selected-font:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.font-options {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--book-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+.font-options li {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.font-options li:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.font-options.hidden {
+    display: none;
+}
+
+#font-size-increase,
+#font-size-decrease {
+    font-weight: 600;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.226);
+}
+
+
+/* --- Ajustes para telas de Celulares (aprox. 400px a 767px) --- */
+@media (min-width: 400px) and (max-width: 767px) {
+    header {
+        padding: 8px 12px;
     }
 
+    .controls {
+        gap: 6px;
+    }
+
+    .controls button,
+    .controls select,
+    #toc-toggle {
+        padding: 6px 10px;
+        font-size: 0.85em;
+    }
+
+    #toc-toggle {
+        width: 90px;
+    }
+    .cover,
+    .chapter-content {
+        padding: 15px auto; /* Reduzindo o padding horizontal para 8px, mantendo 15px vertical */
+        width: 110%; /* Aumentando a largura para quase ocupar tudo */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+
+
     .cover {
-        height: 50vh;
-        border-radius: 0;
+        min-height: auto;
+        padding-top: 15px; /* Reduzindo padding superior da capa */
+        padding-bottom: 15px; /* Reduzindo padding inferior da capa */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; /* Alinha os itens ao topo para dar mais espaço à imagem */
     }
 
     .book-title {
-        font-size: 2em;
+        font-size: 1.5em; /* DRÁSTICA REDUÇÃO NO TAMANHO DO TÍTULO DA CAPA */
+        white-space: normal; /* PERMITIR QUEBRA DE LINHA para evitar "..." */
+        overflow: visible; /* Remover overflow hidden */
+        text-overflow: clip; /* Remover ellipsis */
+        margin-bottom: 20px; /* Pequeno espaço entre o título e a imagem */
+        line-height: 1.2; /* Ajusta a altura da linha para títulos quebrados */
+        text-align: center; /* Centraliza o título */
+    }
+
+    .book-cover-image {
+        max-height: 70vh; /* AUMENTANDO SIGNIFICATIVAMENTE A ALTURA MÁXIMA DA IMAGEM */
+        width: 120%;
+        object-fit: contain;
+        margin-top: 0;
+        margin-bottom: 10px
     }
 
     .chapter-title {
         font-size: 1.5em;
+        margin-top: 1.2em;
+        margin-bottom: 0.6em;
     }
 
-    .chapter-content {
-        padding: 15px;
+    .chapter-content p {
+        font-size: 0.95em;
     }
 
-    header {
-        padding: 10px;
+    blockquote {
+        padding-left: 12px;
+        margin: 1em 0;
     }
 
-    .controls {
-        justify-content: center;
-        gap: 8px;
+    hr {
+        margin: 25px 0;
+    }
+
+        #toc-list {
+        position: absolute; /* Garante que é um popup */
+        width: 92%; /* Mantém a largura */
+        left:  -50%; /* Centraliza horizontalmente */
+        transform: translateX(-50%); /* Garante centralização perfeita */
+        top: calc(100% + 5px); /* Abre abaixo do botão "Sumário" */
+        padding: 6px;
+        max-height: 250px;
+        margin: 0; /* Garante que não haja margens extras */
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
+        border: 1px solid var(--border-color); /* Adiciona borda */
+        border-radius: 10px; /* Arredonda as bordas */
+        background-color: var(--book-bg-color);
+    }
+
+
+    #toc-list li a {
+        padding: 8px 12px;
+        font-size: 0.8em;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+    }
+}
+
+/* Botão flutuante (inferior direito) */
+#comments-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    font-size: 1.5em;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+#comments-toggle:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* Painel lateral (esconde até ativar) */
+#comments-panel {
+    position: fixed;
+    top: 0;
+    right: -100vw;
+    width: 100vw;
+    max-width: 500px;
+    height: 100vh;
+    background-color: var(--book-bg-color);
+    z-index: 9998;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.4);
+    transition: right 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: 1px solid var(--border-color);
+}
+
+/* Quando ativo, aparece */
+#comments-panel.active {
+    right: 0;
+}
+
+/* Botão de fechar (✖) */
+#close-comments {
+    background: transparent;
+    color: var(--primary-text-color);
+    font-size: 1.5em;
+    border: none;
+    align-self: flex-end;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Iframe ocupa 100% da área restante */
+#comments-panel iframe {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    overflow: hidden;
+}
+
+/* Mobile: painel ocupa tela inteira */
+@media (max-width: 600px) {
+    #comments-panel {
+        width: 100vw;
+        right: -100vw;
     }
 }
