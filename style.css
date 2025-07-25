@@ -461,6 +461,7 @@ a:focus-visible,
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.671);
+    filter: contrast(155%);
 }
 
 .chapter-content {
