@@ -217,3 +217,36 @@ closeComments.addEventListener('click', () => {
     commentsPanel.classList.remove('active');
     document.body.style.overflow = ''; // Restaura rolagem
 });
+
+// --- Integração do painel de comentários com fallback ---
+const toggleComments = document.getElementById('comments-toggle');
+const commentsPanel = document.getElementById('comments-panel');
+const closeComments = document.getElementById('close-comments');
+const commentsIframe = document.getElementById('comments-iframe');
+const fallback = document.getElementById('comments-fallback');
+
+// Abrir o painel de comentários
+if (toggleComments && commentsPanel) {
+    toggleComments.addEventListener('click', () => {
+        commentsPanel.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+}
+
+// Fechar o painel de comentários
+if (closeComments && commentsPanel) {
+    closeComments.addEventListener('click', () => {
+        commentsPanel.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+}
+
+// Detectar erro de login (popup bloqueado) vindo do iframe
+window.addEventListener('message', (event) => {
+    if (
+        typeof event.data === 'string' &&
+        event.data.includes('auth/popup-blocked')
+    ) {
+        if (fallback) fallback.style.display = 'block';
+    }
+});
