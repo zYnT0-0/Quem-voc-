@@ -9,16 +9,30 @@
 <body data-theme="light"> 
     
     <!-- Botão flutuante de comentários -->
+<!-- Botão flutuante -->
 <button id="comments-toggle" aria-label="Abrir comentários">💬</button>
 
-<!-- Painel de comentários -->
+<!-- Painel de comentários com iframe -->
 <div id="comments-panel">
   <button id="close-comments" aria-label="Fechar comentários">✖</button>
+
+  <!-- Botão alternativo (visível se der erro no login) -->
+  <div id="comments-fallback" style="display: none; padding: 10px; text-align: center;">
+    <p style="color: red; font-size: 0.9em;">
+      ⚠️ O login pode ter sido bloqueado pelo navegador.
+    </p>
+    <a href="https://livro-comentarios.netlify.app/" target="_blank" style="color: #fff; background-color: #007bff; padding: 8px 12px; border-radius: 5px; text-decoration: none;">
+      Abrir comentários em nova aba
+    </a>
+  </div>
+
   <iframe
+    id="comments-iframe"
     src="https://livro-comentarios.netlify.app/"
     title="Comentários do Livro"
     loading="lazy"
-    sandbox="allow-scripts allow-same-origin allow-forms"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+    allow="popup"
   ></iframe>
 </div>
     
