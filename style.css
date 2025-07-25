@@ -725,7 +725,7 @@ em {
     overflow: hidden;
     border-left: 1px solid var(--border-color);
     
-    padding-bottom: env(safe-area-inset-bottom, 20px); /* Usa área segura ou 20px padrão */
+    padding-bottom: env(safe-area-inset-bottom, 50px); /* Usa área segura ou 20px padrão */
     
 }
 
