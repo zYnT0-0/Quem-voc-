@@ -724,6 +724,9 @@ em {
     flex-direction: column;
     overflow: hidden;
     border-left: 1px solid var(--border-color);
+    
+    padding-bottom: env(safe-area-inset-bottom, 20px); /* Usa área segura ou 20px padrão */
+    
 }
 
 /* Quando ativo, aparece */
