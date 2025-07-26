@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (toggleBtn) {
       
       toggleBtn.style.right = '10px';
-      toggleBtn.style.bottom = '170px';
+      toggleBtn.style.bottom = '110px';
     }
   }
 });
